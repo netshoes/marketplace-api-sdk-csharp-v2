@@ -28,9 +28,14 @@ namespace IO.Swagger.Client
     /// </summary>
     public partial class ApiClient
     {
+        private const string baseUrl = "https://api-sandbox.netshoes.com.br/api/v2";
+        //private const string baseUrl = "http://api-marketplace.netshoes.com.br/api/v2/";
+
         private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
         {
-            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+            NullValueHandling = NullValueHandling.Ignore,
+            Error = (se, ev) => ev.ErrorContext.Handled = true
         };
 
         /// <summary>
@@ -53,7 +58,7 @@ namespace IO.Swagger.Client
         public ApiClient()
         {
             Configuration = Configuration.Default;
-            RestClient = new RestClient("https://api-sandbox.netshoes.com.br/api/v2");
+            RestClient = new RestClient(baseUrl);
         }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace IO.Swagger.Client
             else
                 Configuration = config;
 
-            RestClient = new RestClient("https://api-sandbox.netshoes.com.br/api/v2");
+            RestClient = new RestClient(baseUrl);
         }
 
         /// <summary>
@@ -76,7 +81,7 @@ namespace IO.Swagger.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "https://api-sandbox.netshoes.com.br/api/v2")
+        public ApiClient(String basePath = baseUrl)
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
@@ -132,7 +137,7 @@ namespace IO.Swagger.Client
             // add file parameter, if any
             foreach(var param in fileParams)
             {
-                request.AddFile(param.Value.Name, param.Value.Writer, param.Value.FileName, param.Value.ContentType);
+                request.AddFile(param.Value.Name, param.Value.Writer, param.Value.FileName, param.Value.ContentLength, param.Value.ContentType);
             }
 
             if (postBody != null) // http body (model or byte[]) parameter
@@ -339,7 +344,7 @@ namespace IO.Swagger.Client
         {
             try
             {
-                return obj != null ? JsonConvert.SerializeObject(obj) : null;
+                return obj != null ? JsonConvert.SerializeObject(obj, serializerSettings) : null;
             }
             catch (Exception e)
             {

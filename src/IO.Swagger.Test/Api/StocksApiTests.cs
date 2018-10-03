@@ -75,7 +75,7 @@ namespace IO.Swagger.Test
             //string accessToken = null;
             //string sku = null;
             //var response = instance.GetStockProductBySku(clientId, accessToken, sku);
-            //Assert.IsInstanceOf<InlineResponse2003> (response, "response is InlineResponse2003");
+            //Assert.IsInstanceOf<InlineResponse2003>(response, "response is InlineResponse2003");
         }
         
         /// <summary>

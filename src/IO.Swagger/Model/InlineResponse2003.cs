@@ -27,29 +27,32 @@ namespace IO.Swagger.Model
     /// InlineResponse2003
     /// </summary>
     [DataContract]
-    public partial class InlineResponse2003 :  IEquatable<InlineResponse2003>, IValidatableObject
+    public partial class InlineResponse2003 : IEquatable<InlineResponse2003>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InlineResponse2003" /> class.
         /// </summary>
         /// <param name="Available">Available.</param>
         /// <param name="Links">Links.</param>
-        public InlineResponse2003(int? Available = default(int?), List<InlineResponse200ItemsLinks> Links = default(List<InlineResponse200ItemsLinks>))
+        public InlineResponse2003(int? Available = default(int?), int? Reserved = default(int?), List<InlineResponse200Link> Links = default(List<InlineResponse200Link>))
         {
             this.Available = Available;
+            this.Reserved = Reserved;
             this.Links = Links;
         }
-        
+
         /// <summary>
         /// Gets or Sets Available
         /// </summary>
-        [DataMember(Name="available", EmitDefaultValue=false)]
+        [DataMember(Name = "available", EmitDefaultValue = false)]
         public int? Available { get; set; }
+        [DataMember(Name = "reserved", EmitDefaultValue = false)]
+        public int? Reserved { get; set; }
         /// <summary>
         /// Gets or Sets Links
         /// </summary>
-        [DataMember(Name="links", EmitDefaultValue=false)]
-        public List<InlineResponse200ItemsLinks> Links { get; set; }
+        [DataMember(Name = "links", EmitDefaultValue = false)]
+        public List<InlineResponse200Link> Links { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -63,7 +66,7 @@ namespace IO.Swagger.Model
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
@@ -95,12 +98,17 @@ namespace IO.Swagger.Model
             if (other == null)
                 return false;
 
-            return 
+            return
                 (
                     this.Available == other.Available ||
                     this.Available != null &&
                     this.Available.Equals(other.Available)
-                ) && 
+                ) &&
+                (
+                    this.Reserved == other.Reserved ||
+                    this.Reserved != null &&
+                    this.Reserved.Equals(other.Reserved)
+                ) &&
                 (
                     this.Links == other.Links ||
                     this.Links != null &&
@@ -121,6 +129,8 @@ namespace IO.Swagger.Model
                 // Suitable nullity checks etc, of course :)
                 if (this.Available != null)
                     hash = hash * 59 + this.Available.GetHashCode();
+                if (this.Reserved != null)
+                    hash = hash * 59 + this.Reserved.GetHashCode();
                 if (this.Links != null)
                     hash = hash * 59 + this.Links.GetHashCode();
                 return hash;
@@ -128,7 +138,7 @@ namespace IO.Swagger.Model
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { 
+        {
             yield break;
         }
     }
